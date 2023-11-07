@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Recaptcha v3 token testing</title>
+		<script src="https://www.google.com/recaptcha/api.js?render=your-recaptcha-code-from-admin-panel"></script>
+	</head>
+	<body>
+		<h1 id="recaptchaResponse"></h1>
+		<button id="copy">copy</button>
+	</body>
+	<script>
+		grecaptcha.ready(function () {
+			grecaptcha
+				.execute("your-recaptcha-code-from-admin-panel", {
+					//replace this content with your PRIVATE api key. Here and in 7th line code
+					action: "contact",
+				})
+				.then((response) => {
+					console.log(response);
+					document.getElementById("recaptchaResponse").innerText =
+						response;
+				});
+		});
+
+		document.querySelector("#copy").addEventListener("click", function () {
+			var tempElem = document.createElement("textarea");
+			tempElem.value =
+				document.getElementById("recaptchaResponse").textContent;
+			document.body.appendChild(tempElem);
+
+			tempElem.select();
+			document.execCommand("copy");
+			document.body.removeChild(tempElem);
+		});
+	</script>
+</html>
